@@ -45,9 +45,12 @@ public class UserDataUpdateEventDeserializer extends JsonDeserializer<UserDataUp
     } else if (userDataUpdateEventType == UserDataUpdateEventType.BALANCE_UPDATE) {
       BalanceUpdateEvent balanceUpdateEvent = getUserDataUpdateEventDetail(json, BalanceUpdateEvent.class, mapper);
       userDataUpdateEvent.setBalanceUpdateEvent(balanceUpdateEvent);
-    } else { // userDataUpdateEventType == UserDataUpdateEventType.ORDER_TRADE_UPDATE
+    } else if (userDataUpdateEventType == UserDataUpdateEventType.ORDER_TRADE_UPDATE) {
       OrderTradeUpdateEvent orderTradeUpdateEvent = getUserDataUpdateEventDetail(json, OrderTradeUpdateEvent.class, mapper);
       userDataUpdateEvent.setOrderTradeUpdateEvent(orderTradeUpdateEvent);
+    } else { //LIST_STATUS
+      ListStatusUpdateEvent listStatusUpdateEvent = getUserDataUpdateEventDetail(json, ListStatusUpdateEvent.class, mapper);
+      userDataUpdateEvent.setListStatusUpdateEvent(listStatusUpdateEvent);
     }
 
     return userDataUpdateEvent;
@@ -61,3 +64,4 @@ public class UserDataUpdateEventDeserializer extends JsonDeserializer<UserDataUp
     }
   }
 }
+

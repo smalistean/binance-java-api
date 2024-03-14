@@ -30,6 +30,8 @@ public class UserDataUpdateEvent {
 
   private OrderTradeUpdateEvent orderTradeUpdateEvent;
 
+  private ListStatusUpdateEvent listStatusUpdateEvent;
+
   public UserDataUpdateEventType getEventType() {
     return eventType;
   }
@@ -78,17 +80,27 @@ public class UserDataUpdateEvent {
     this.orderTradeUpdateEvent = orderTradeUpdateEvent;
   }
 
+  public ListStatusUpdateEvent getListStatusUpdateEvent() {
+    return listStatusUpdateEvent;
+  }
+
+  public void setListStatusUpdateEvent(ListStatusUpdateEvent listStatusUpdateEvent) {
+    this.listStatusUpdateEvent = listStatusUpdateEvent;
+  }
+
   @Override
   public String toString() {
     ToStringBuilder sb = new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
-        .append("eventType", eventType)
-        .append("eventTime", eventTime);
+            .append("eventType", eventType)
+            .append("eventTime", eventTime);
     if (eventType == UserDataUpdateEventType.ACCOUNT_POSITION_UPDATE) {
       sb.append("outboundAccountPositionUpdateEvent", outboundAccountPositionUpdateEvent);
     } else if (eventType == UserDataUpdateEventType.BALANCE_UPDATE) {
       sb.append("balanceUpdateEvent", balanceUpdateEvent);
-    } else {
+    } else if (eventType == UserDataUpdateEventType.ORDER_TRADE_UPDATE){
       sb.append("orderTradeUpdateEvent", orderTradeUpdateEvent);
+    } else {
+      sb.append("listStatusUpdateEvent", listStatusUpdateEvent);
     }
     return sb.toString();
   }
@@ -100,6 +112,8 @@ public class UserDataUpdateEvent {
     BALANCE_UPDATE("balanceUpdate"),
     /** Corresponds to "executionReport" events. */
     ORDER_TRADE_UPDATE("executionReport"),
+
+    LIST_STATUS("listStatus")
     ;
 
     private final String eventTypeId;
@@ -119,8 +133,11 @@ public class UserDataUpdateEvent {
         return ACCOUNT_POSITION_UPDATE;
       } else if (BALANCE_UPDATE.eventTypeId.equals(eventTypeId)) {
         return BALANCE_UPDATE;
+      } else if (LIST_STATUS.eventTypeId.equals(eventTypeId)) {
+        return LIST_STATUS;
       }
       throw new UnsupportedEventException("Unrecognized user data update event type id: " + eventTypeId);
     }
   }
 }
+

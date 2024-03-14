@@ -55,12 +55,12 @@ public class SymbolFilter {
    */
   private String stepSize;
 
-  // MIN_NOTIONAL
-
-  /**
-   * Defines the minimum notional value allowed for an order on a symbol. An order's notional value is the price * quantity.
-   */
-  private String minNotional;
+//  // MIN_NOTIONAL
+//
+//  /**
+//   * Defines the minimum notional value allowed for an order on a symbol. An order's notional value is the price * quantity.
+//   */
+//  private String minNotional;
 
 
   // MAX_NUM_ALGO_ORDERS
@@ -76,6 +76,25 @@ public class SymbolFilter {
    * ICEBERG_PARTS filter defines the maximum parts an iceberg order can have. The number of ICEBERG_PARTS is defined as CEIL(qty / icebergQty).
    */
   private String limit;
+
+  //TRAILING_DELTA
+  private String minTrailingAboveDelta;
+  private String maxTrailingAboveDelta;
+  private String minTrailingBelowDelta;
+  private String maxTrailingBelowDelta;
+
+  //PERCENT_PRICE_BY_SIDE
+  private String bidMultiplierUp;
+  private String bidMultiplierDown;
+  private String askMultiplierUp;
+  private String askMultiplierDown;
+  private Integer avgPriceMins;
+
+  //NOTIONAL
+  private String minNotional;
+  private Boolean applyMinToMarket;
+  private String maxNotional;
+  private Boolean applyMaxToMarket;
 
   public FilterType getFilterType() {
     return filterType;
@@ -133,13 +152,13 @@ public class SymbolFilter {
     this.stepSize = stepSize;
   }
 
-  public String getMinNotional() {
-    return minNotional;
-  }
+//  public String getMinNotional() {
+//    return minNotional;
+//  }
 
-  public void setMinNotional(String minNotional) {
-    this.minNotional = minNotional;
-  }
+//  public void setMinNotional(String minNotional) {
+//    this.minNotional = minNotional;
+//  }
 
   public String getMaxNumAlgoOrders() {
     return maxNumAlgoOrders;
@@ -157,4 +176,137 @@ public class SymbolFilter {
   public void setLimit(String limit) {
     this.limit = limit;
   }
+
+  public String getMinTrailingAboveDelta() {
+    return minTrailingAboveDelta;
+  }
+
+  public void setMinTrailingAboveDelta(String minTrailingAboveDelta) {
+    this.minTrailingAboveDelta = minTrailingAboveDelta;
+  }
+
+  public String getMaxTrailingAboveDelta() {
+    return maxTrailingAboveDelta;
+  }
+
+  public void setMaxTrailingAboveDelta(String maxTrailingAboveDelta) {
+    this.maxTrailingAboveDelta = maxTrailingAboveDelta;
+  }
+
+  public String getMinTrailingBelowDelta() {
+    return minTrailingBelowDelta;
+  }
+
+  public void setMinTrailingBelowDelta(String minTrailingBelowDelta) {
+    this.minTrailingBelowDelta = minTrailingBelowDelta;
+  }
+
+  public String getMaxTrailingBelowDelta() {
+    return maxTrailingBelowDelta;
+  }
+
+  public void setMaxTrailingBelowDelta(String maxTrailingBelowDelta) {
+    this.maxTrailingBelowDelta = maxTrailingBelowDelta;
+  }
+
+  public String getBidMultiplierUp() {
+    return bidMultiplierUp;
+  }
+
+  public void setBidMultiplierUp(String bidMultiplierUp) {
+    this.bidMultiplierUp = bidMultiplierUp;
+  }
+
+  public String getBidMultiplierDown() {
+    return bidMultiplierDown;
+  }
+
+  public void setBidMultiplierDown(String bidMultiplierDown) {
+    this.bidMultiplierDown = bidMultiplierDown;
+  }
+
+  public String getAskMultiplierUp() {
+    return askMultiplierUp;
+  }
+
+  public void setAskMultiplierUp(String askMultiplierUp) {
+    this.askMultiplierUp = askMultiplierUp;
+  }
+
+  public String getAskMultiplierDown() {
+    return askMultiplierDown;
+  }
+
+  public void setAskMultiplierDown(String askMultiplierDown) {
+    this.askMultiplierDown = askMultiplierDown;
+  }
+
+  public Integer getAvgPriceMins() {
+    return avgPriceMins;
+  }
+
+  public String getMinNotional() {
+    return minNotional;
+  }
+
+  public void setMinNotional(String minNotional) {
+    this.minNotional = minNotional;
+  }
+
+  public Boolean getApplyMinToMarket() {
+    return applyMinToMarket;
+  }
+
+  public void setApplyMinToMarket(Boolean applyMinToMarket) {
+    this.applyMinToMarket = applyMinToMarket;
+  }
+
+  public String getMaxNotional() {
+    return maxNotional;
+  }
+
+  public void setMaxNotional(String maxNotional) {
+    this.maxNotional = maxNotional;
+  }
+
+  public Boolean getApplyMaxToMarket() {
+    return applyMaxToMarket;
+  }
+
+  public void setApplyMaxToMarket(Boolean applyMaxToMarket) {
+    this.applyMaxToMarket = applyMaxToMarket;
+  }
+
+  public void setAvgPriceMins(Integer avgPriceMins) {
+    this.avgPriceMins = avgPriceMins;
+  }
+
+  @Override
+  public String toString() {
+    return "SymbolFilter{" +
+            "filterType=" + filterType +
+            ", minPrice='" + minPrice + '\'' +
+            ", maxPrice='" + maxPrice + '\'' +
+            ", tickSize='" + tickSize + '\'' +
+            ", minQty='" + minQty + '\'' +
+            ", maxQty='" + maxQty + '\'' +
+            ", stepSize='" + stepSize + '\'' +
+            ", maxNumAlgoOrders='" + maxNumAlgoOrders + '\'' +
+            ", limit='" + limit + '\'' +
+            ", minTrailingAboveDelta='" + minTrailingAboveDelta + '\'' +
+            ", maxTrailingAboveDelta='" + maxTrailingAboveDelta + '\'' +
+            ", minTrailingBelowDelta='" + minTrailingBelowDelta + '\'' +
+            ", maxTrailingBelowDelta='" + maxTrailingBelowDelta + '\'' +
+            ", bidMultiplierUp='" + bidMultiplierUp + '\'' +
+            ", bidMultiplierDown='" + bidMultiplierDown + '\'' +
+            ", askMultiplierUp='" + askMultiplierUp + '\'' +
+            ", askMultiplierDown='" + askMultiplierDown + '\'' +
+            ", avgPriceMins=" + avgPriceMins +
+            ", minNotional='" + minNotional + '\'' +
+            ", applyMinToMarket=" + applyMinToMarket +
+            ", maxNotional='" + maxNotional + '\'' +
+            ", applyMaxToMarket=" + applyMaxToMarket +
+            '}';
+  }
 }
+

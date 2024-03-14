@@ -1,13 +1,8 @@
 package com.binance.api.domain.event;
 
 
+import com.binance.api.client.domain.*;
 import com.binance.api.client.domain.account.AssetBalance;
-import com.binance.api.client.domain.ExecutionType;
-import com.binance.api.client.domain.OrderRejectReason;
-import com.binance.api.client.domain.OrderSide;
-import com.binance.api.client.domain.OrderStatus;
-import com.binance.api.client.domain.OrderType;
-import com.binance.api.client.domain.TimeInForce;
 import com.binance.api.client.domain.event.AccountUpdateEvent;
 import com.binance.api.client.domain.event.OrderTradeUpdateEvent;
 import com.binance.api.client.domain.event.UserDataUpdateEvent;
@@ -77,5 +72,19 @@ public class UserDataUpdateEventDeserializerTest {
     }
   }
 
+  @Test
+  public void testListStatusEventDeserializer() {
+    String listStatusJson = "{\"e\":\"listStatus\",\"E\":1653207800791,\"s\":\"YGGBUSD\",\"g\":66726901,\"c\":\"OCO\",\"l\":\"EXEC_STARTED\",\"L\":\"EXECUTING\",\"r\":\"NONE\",\"C\":\"uVUfjBZQtBYR3YRf0k93eR\",\"T\":1653207800790,\"O\":[{\"s\":\"YGGBUSD\",\"i\":51236528,\"c\":\"G1xsSySo3BcTEnq15iAORh\"},{\"s\":\"YGGBUSD\",\"i\":51236529,\"c\":\"mHwDdj5JYFQ1lWtFkBFMG0\"}]}";
+
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      UserDataUpdateEvent userDataUpdateEvent = mapper.readValue(listStatusJson, UserDataUpdateEvent.class);
+      assertEquals(userDataUpdateEvent.getEventType().getEventTypeId(), "listStatus");
+    } catch (IOException e) {
+      fail();
+    }
+  }
+
 }
+
 

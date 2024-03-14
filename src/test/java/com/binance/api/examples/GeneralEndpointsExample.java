@@ -29,18 +29,19 @@ public class GeneralEndpointsExample {
     // Exchange info
     ExchangeInfo exchangeInfo = client.getExchangeInfo();
     System.out.println(exchangeInfo.getTimezone());
-    System.out.println(exchangeInfo.getSymbols());
+//    System.out.println(exchangeInfo.getSymbols());
 
     // Obtain symbol information
-    SymbolInfo symbolInfo = exchangeInfo.getSymbolInfo("ETHBTC");
-    System.out.println(symbolInfo.getStatus());
+    SymbolInfo symbolInfo = exchangeInfo.getSymbolInfo("SOLBUSD");
+    System.out.println(symbolInfo);
 
     SymbolFilter priceFilter = symbolInfo.getSymbolFilter(FilterType.PRICE_FILTER);
     System.out.println(priceFilter.getMinPrice());
     System.out.println(priceFilter.getTickSize());
 
     // Obtain asset information
-    List<Asset> allAssets = client.getAllAssets();
-    System.out.println(allAssets.stream().filter(asset -> asset.getAssetCode().equals("BNB")).findFirst().get());
+//    List<Asset> allAssets = client.getAllAssets();
+//    System.out.println(allAssets.stream().filter(asset -> asset.getAssetCode().equals("BNB")).findFirst().get());
   }
 }
+

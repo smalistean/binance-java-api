@@ -18,6 +18,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -28,50 +29,70 @@ public class ExchangeInfoDeserializerTest {
   @Test
   public void testExchangeInfoDeserialization() {
     final String json = "{\n" +
-        "  \"timezone\": \"UTC\",\n" +
-        "  \"serverTime\": 1508631584636,\n" +
-        "  \"rateLimits\": [{\n" +
-        "      \"rateLimitType\": \"REQUEST_WEIGHT\",\n" +
-        "      \"interval\": \"MINUTE\",\n" +
-        "      \"limit\": 1200\n" +
-        "    },\n" +
-        "    {\n" +
-        "      \"rateLimitType\": \"ORDERS\",\n" +
-        "      \"interval\": \"SECOND\",\n" +
-        "      \"limit\": 10\n" +
-        "    },\n" +
-        "    {\n" +
-        "      \"rateLimitType\": \"ORDERS\",\n" +
-        "      \"interval\": \"DAY\",\n" +
-        "      \"limit\": 100000\n" +
-        "    }\n" +
-        "  ],\n" +
-        "  \"exchangeFilters\": [],\n" +
-        "  \"symbols\": [{\n" +
-        "    \"symbol\": \"ETHBTC\",\n" +
-        "    \"status\": \"TRADING\",\n" +
-        "    \"baseAsset\": \"ETH\",\n" +
-        "    \"baseAssetPrecision\": 8,\n" +
-        "    \"quoteAsset\": \"BTC\",\n" +
-        "    \"quotePrecision\": 8,\n" +
-        "    \"orderTypes\": [\"LIMIT\", \"MARKET\"],\n" +
-        "    \"icebergAllowed\": false,\n" +
-        "    \"filters\": [{\n" +
-        "      \"filterType\": \"PRICE_FILTER\",\n" +
-        "      \"minPrice\": \"0.00000100\",\n" +
-        "      \"maxPrice\": \"100000.00000000\",\n" +
-        "      \"tickSize\": \"0.00000100\"\n" +
-        "    }, {\n" +
-        "      \"filterType\": \"LOT_SIZE\",\n" +
-        "      \"minQty\": \"0.00100000\",\n" +
-        "      \"maxQty\": \"100000.00000000\",\n" +
-        "      \"stepSize\": \"0.00100000\"\n" +
-        "    }, {\n" +
-        "      \"filterType\": \"MIN_NOTIONAL\",\n" +
-        "      \"minNotional\": \"0.00100000\"\n" +
-        "    }]\n" +
-        "  }]" +
-        "}";
+            "  \"timezone\": \"UTC\",\n" +
+            "  \"serverTime\": 1508631584636,\n" +
+            "  \"rateLimits\": [{\n" +
+            "      \"rateLimitType\": \"REQUEST_WEIGHT\",\n" +
+            "      \"interval\": \"MINUTE\",\n" +
+            "      \"limit\": 1200\n" +
+            "    }, {\n" +
+            "      \"rateLimitType\": \"ORDERS\",\n" +
+            "      \"interval\": \"SECOND\",\n" +
+            "      \"limit\": 10\n" +
+            "    }, {\n" +
+            "      \"rateLimitType\": \"ORDERS\",\n" +
+            "      \"interval\": \"DAY\",\n" +
+            "      \"limit\": 100000\n" +
+            "    }\n" +
+            "  ],\n" +
+            "  \"exchangeFilters\": [],\n" +
+            "  \"symbols\": [{\n" +
+            "    \"symbol\": \"ETHBTC\",\n" +
+            "    \"status\": \"TRADING\",\n" +
+            "    \"baseAsset\": \"ETH\",\n" +
+            "    \"baseAssetPrecision\": 8,\n" +
+            "    \"quoteAsset\": \"BTC\",\n" +
+            "    \"quotePrecision\": 8,\n" +
+            "    \"orderTypes\": [\"LIMIT\", \"MARKET\"],\n" +
+            "    \"icebergAllowed\": false,\n" +
+            "    \"filters\": [{\n" +
+            "      \"filterType\": \"PRICE_FILTER\",\n" +
+            "      \"minPrice\": \"0.00000100\",\n" +
+            "      \"maxPrice\": \"100000.00000000\",\n" +
+            "      \"tickSize\": \"0.00000100\"\n" +
+            "    }, {\n" +
+            "      \"filterType\": \"LOT_SIZE\",\n" +
+            "      \"minQty\": \"0.00100000\",\n" +
+            "      \"maxQty\": \"100000.00000000\",\n" +
+            "      \"stepSize\": \"0.00100000\"\n" +
+            "    }, {\n" +
+            "      \"filterType\": \"TRAILING_DELTA\",\n" +
+            "      \"minTrailingAboveDelta\": \"10\",\n" +
+            "      \"maxTrailingAboveDelta\": \"2000\",\n" +
+            "      \"minTrailingBelowDelta\": \"10\",\n" +
+            "      \"maxTrailingBelowDelta\": \"2000\"\n" +
+            "    }, {\n" +
+            "      \"filterType\": \"PERCENT_PRICE_BY_SIDE\",\n" +
+            "      \"bidMultiplierUp\": \"5\",\n" +
+            "      \"bidMultiplierDown\": \"0.2\",\n" +
+            "      \"askMultiplierUp\": \"5\",\n" +
+            "      \"askMultiplierDown\": \"0.2\",\n" +
+            "      \"avgPriceMins\": 5\n" +
+            "    }, {\n" +
+            "      \"filterType\": \"NOTIONAL\",\n" +
+            "      \"minNotional\": \"0.00010000\",\n" +
+            "      \"applyMinToMarket\": true,\n" +
+            "      \"maxNotional\": \"9000000.00000000\",\n" +
+            "      \"applyMaxToMarket\": false,\n" +
+            "      \"avgPriceMins\": 6\n" +
+            "    }]\n" +
+            "  }]" +
+            "}";
+    /*{
+      filterType: "MAX_NUM_ORDERS",
+              maxNumOrders: 200
+    },*/
+
     ObjectMapper mapper = new ObjectMapper();
     try {
       ExchangeInfo exchangeInfo = mapper.readValue(json, ExchangeInfo.class);
@@ -98,7 +119,7 @@ public class ExchangeInfoDeserializerTest {
       assertFalse(symbolInfo.isIcebergAllowed());
 
       List<SymbolFilter> symbolFilters = symbolInfo.getFilters();
-      assertEquals(symbolFilters.size(), 3);
+      assertEquals(5, symbolFilters.size());
 
       SymbolFilter priceFilter = symbolFilters.get(0);
       assertEquals(priceFilter.getFilterType(), FilterType.PRICE_FILTER);
@@ -112,10 +133,30 @@ public class ExchangeInfoDeserializerTest {
       assertEquals(lotSizeFilter.getMaxQty(), "100000.00000000");
       assertEquals(lotSizeFilter.getStepSize(), "0.00100000");
 
-      SymbolFilter minNotionalFilter = symbolFilters.get(2);
-      assertEquals(minNotionalFilter.getFilterType(), FilterType.MIN_NOTIONAL);
-      assertEquals(minNotionalFilter.getMinNotional(), "0.00100000");
+      SymbolFilter trailingDeltaFilter = symbolFilters.get(2);
+      assertEquals(trailingDeltaFilter.getFilterType(), FilterType.TRAILING_DELTA);
+      assertEquals(trailingDeltaFilter.getMinTrailingAboveDelta(), "10");
+      assertEquals(trailingDeltaFilter.getMaxTrailingAboveDelta(), "2000");
+      assertEquals(trailingDeltaFilter.getMinTrailingBelowDelta(), "10");
+      assertEquals(trailingDeltaFilter.getMaxTrailingBelowDelta(), "2000");
+
+      SymbolFilter percentPriceBySideFilter = symbolFilters.get(3);
+      assertEquals(percentPriceBySideFilter.getFilterType(), FilterType.PERCENT_PRICE_BY_SIDE);
+      assertEquals(percentPriceBySideFilter.getBidMultiplierUp(), "5");
+      assertEquals(percentPriceBySideFilter.getBidMultiplierDown(), "0.2");
+      assertEquals(percentPriceBySideFilter.getAskMultiplierUp(), "5");
+      assertEquals(percentPriceBySideFilter.getAskMultiplierDown(), "0.2");
+      assertEquals((int) percentPriceBySideFilter.getAvgPriceMins(), 5);
+
+      SymbolFilter notionalFilter = symbolFilters.get(4);
+      assertEquals(notionalFilter.getFilterType(), FilterType.NOTIONAL);
+      assertEquals(notionalFilter.getMinNotional(), "0.00010000");
+      assertTrue(notionalFilter.getApplyMinToMarket());
+      assertEquals(notionalFilter.getMaxNotional(), "9000000.00000000");
+      assertFalse(notionalFilter.getApplyMaxToMarket());
+      assertEquals((int) notionalFilter.getAvgPriceMins(), 6);
     } catch (IOException e) {
+      e.printStackTrace();
       fail();
     }
   }
@@ -126,3 +167,4 @@ public class ExchangeInfoDeserializerTest {
     assertEquals((long)rateLimit.getLimit(), expectedLimit);
   }
 }
+
